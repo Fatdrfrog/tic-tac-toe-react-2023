@@ -4,6 +4,9 @@ import Grid from "./components/Grid";
 
 function App() {
   const gridFromLocalStorage = JSON.parse(localStorage.getItem("grid"));
+  const playerFromLocalStorage = JSON.parse(localStorage.getItem("player"));
+  const initPlayer = true;
+  console.log(playerFromLocalStorage);
   const emptyGrid = [
     { id: 1, text: "" },
     { id: 2, text: "" },
@@ -36,6 +39,7 @@ function App() {
     });
     setGrid(newGrid);
     localStorage.setItem("grid", JSON.stringify(newGrid));
+    localStorage.setItem("player", JSON.stringify(!user));
   }
 
   const checkWinner = () => {
@@ -102,8 +106,8 @@ function App() {
     return (
       <MainLayout>
         <div className="flex flex-col w-full justify-center items-center">
-          <button onClick={() => {setGameStarted(true); setGrid(emptyGrid)}}>Start Game</button>
-          {gridFromLocalStorage != null ? <button onClick={() => {setGameStarted(true); setGrid(gridFromLocalStorage)}}>Resume Game</button> : "" }
+          <button onClick={() => {setGameStarted(true); setGrid(emptyGrid); if(!user) setUser(initPlayer)}}>Start Game</button>
+          {gridFromLocalStorage != null ? <button onClick={() => {setGameStarted(true); setGrid(gridFromLocalStorage); if(user != playerFromLocalStorage) setUser(playerFromLocalStorage); }}>Resume Game</button> : "" }
           <button onClick={() => {setOptions(true)}}>Options</button>
         </div>
       </MainLayout>
@@ -114,7 +118,7 @@ function App() {
     <MainLayout>
       <Grid grid={grid} handlePlay={handlePlay} darkTheme={darkTheme} />
       <div className="flex w-full justify-center items-center">{checkWinner() != null ? "Winner is " + checkWinner() : ""}</div>
-      {gameEnded ? <div onClick={() => {setGameEnded(false); setGameStarted(false); setGrid(emptyGrid); localStorage.removeItem("grid")}} className="flex w-full justify-center items-center">Go to menu</div> : ""}
+      {gameEnded ? <div onClick={() => {setGameEnded(false); setGameStarted(false); setGrid(emptyGrid); localStorage.removeItem("grid"); localStorage.removeItem("player")}} className="flex w-full justify-center items-center">Go to menu</div> : ""}
     </MainLayout>
   );
 }
