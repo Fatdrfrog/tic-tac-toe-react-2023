@@ -67,10 +67,21 @@ function App() {
           setGameEnded(true);
       return grid[2].text;
     }
+    
+    let count = 0;
+    for(let i = 0; i < 9; i++) {
+      if(grid[i].text != "") {
+        count++;
+      }
+    }
 
-    if(grid.filter((item) => item.text != "").length === 9 && !gameEnded){
-      setGameEnded(true);
-      return "Nobody";
+    console.log(count);
+    console.log(gameEnded);
+
+    if(count === 9) {
+      if(!gameEnded)
+        setGameEnded(true);
+      return "Draw";
     }
 
     return null;
