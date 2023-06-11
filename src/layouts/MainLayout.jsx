@@ -1,7 +1,9 @@
 function MainLayout(props) {
   return (
-    <div className="grid w-screen h-screen bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-950 via-red-600 to-stone-700 text-white text-lg">
-      {props.children}
+    <div>
+      <div className="grid w-screen h-screen bg-white dark:bg-black text-black dark:text-white text-lg">
+        {props.children}
+      </div>
     </div>
   );
 }
